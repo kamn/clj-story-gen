@@ -1,43 +1,13 @@
 (ns clj-story-gen.core
   (:gen-class)
-  (:require [clj-story-gen.post-process :as pp]))
+  (:require [clj-story-gen.post-process :as pp]
+            [clj-story-gen.markov :as m]
+            [clj-story-gen.sim :as sim]
+            [clj-story-gen.template :as t]
+            [selmer.parser :as selmer]))
 
-;; Names of characters (Good old Alice and Bob)
-(def names 
-  ["Alice" 
-   "Bob" 
-   "Carol" 
-   "Chuck" 
-   "Eve" 
-   "Sybil"])
-
-(def places 
-  ["London" 
-   "New York" 
-   "Hong Kong" 
-   "Johannesburg"])
-
-(def disaster
-  ["fire"
-   "earthquake"
-   "tornado"
-   "flood"
-   "Fire Nation attack"])
-
-(def story-templates 
-  ["%s wanted to visit %s. %s also wanted to go. There was a %s and neither could go."
-   "%s lived in %s. %s came over for dinner. There was a %s and they both were hurt."
-   "%s was passing though %s. %s wanted to meet up for lunch but a %s prevented it."]) 
-
-(defn get-story []
-  (let [rand-name (rand-nth names)
-        rand-place (rand-nth places)
-        rand-friend (rand-nth names)
-        rand-disaster (rand-nth disaster)
-        rand-template (rand-nth story-templates)]
-     (println (format rand-template rand-name rand-place rand-friend rand-disaster))))
 
 (defn -main
   ""
   [& args]
-  (pp/get-story))
+  (sim/get-story))
